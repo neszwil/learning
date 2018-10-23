@@ -5,7 +5,8 @@
 #include<chrono>
 #include<list>
 
-int main(){
+int main()
+{
    srand(time(NULL));
 //vector
    std::vector<int> v1;
