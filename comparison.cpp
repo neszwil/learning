@@ -68,6 +68,21 @@ int main(){
    auto end8 = std::chrono::system_clock::now();
    auto elapsed8 = end8 - start8;
    std::cout << "specified value in list<float> "<<*it2<<std::endl<<elapsed8.count() <<std::endl;
+//insert at random position vector<int> 
+   auto start9 = std::chrono::system_clock::now();
+   auto itpos=v1.begin()+pozycja;
+   auto newit=v1.insert(itpos, liczba);
+   auto end9 = std::chrono::system_clock::now();
+   auto elapsed9 = end9 - start9;
+   std::cout << "insert at random position vetor<int>"<<std::endl<<elapsed9.count() <<std::endl;
+//insert at random position vector<float> 
+   auto start10 = std::chrono::system_clock::now();
+   auto itpos2=v2.begin()+pozycja;
+   auto newit2=v2.insert(itpos2, liczba_f);
+   auto end10 = std::chrono::system_clock::now();
+   auto elapsed10 = end10 - start10;
+   std::cout << "insert at random position vetor<float>"<<std::endl<<elapsed10.count() <<std::endl;
+
 
 
 
