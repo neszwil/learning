@@ -69,6 +69,19 @@ bool trial(long long data)
 	return true;
 }
 
+bool gmp_prime(long long data)
+{
+	long long tmp = data;
+	mpz_t value;
+	mpz_init(value);
+	mpz_import(value, 1, -1, sizeof data, 0, 0, &tmp);
+	int result = mpz_probab_prime_p(value, 15);
+	if(result==1 || result == 2)
+		return true;
+	else
+		return false;
+}
+
 void func1(const std::vector<long long>& value)
 {
 	std::for_each(value.begin(), value.end(), trial);
@@ -78,7 +91,10 @@ void func2(const std::vector<long long>& value)
 {	
 	std::for_each(value.begin(), value.end(), isPrime);
 }
-
+void func3(const std::vector<long long>& value)
+{	
+	std::for_each(value.begin(), value.end(), gmp_prime);
+}
 
 int main()
 {
@@ -128,6 +144,25 @@ int main()
 	std::chrono::duration<double> rabin_seconds = end_rabin - start_rabin;
 	double czas_rabin = rabin_seconds.count();
 	std::cout<<czas_rabin<<std::endl;
+//gmp
+
+	std::vector<std::vector<long long>>::iterator it3 = my_v.begin();
+	std::vector<std::thread> threads3;
+	auto start_gmp = std::chrono::system_clock::now();
+	for(int j=0;j<nproc;j++)
+	   	{
+        	threads3.emplace_back(func3, std::cref(*(it3+j)));
+    	}
+
+    for (auto& thread: threads3)
+    {
+        thread.join();
+    }
+    auto end_gmp = std::chrono::system_clock::now();
+	std::chrono::duration<double> gmp_seconds = end_gmp - start_gmp;
+	double czas_gmp = gmp_seconds.count();
+	std::cout<<czas_gmp<<std::endl;
+	
 	
     return 0;
 }
